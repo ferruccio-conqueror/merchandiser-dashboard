@@ -1,3 +1,5 @@
+import { User, InsertUser } from "@shared/schema";
+
 export interface IUserService {
     // User operations
     getUser(id: string): Promise<User | undefined>;

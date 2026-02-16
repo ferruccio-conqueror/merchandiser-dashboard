@@ -1195,6 +1195,8 @@ export const insertVendorClientAssignmentSchema = vendorClientAssignmentFullSche
   createdAt: true,
 });
 
+
+// Vendor schema
 const vendorFullSchema = createInsertSchema(vendors, {
   email: z.string().email().optional(),
 });

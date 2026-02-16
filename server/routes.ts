@@ -1,5 +1,5 @@
 import type { Express, Response } from "express";
-import { storage, logService } from "./storage";
+import { storage, logService, userService, staffService, vendorService, vendorContactService } from "./storage";
 import { db } from "./db";
 import { sql, eq, and, or, inArray, isNull, desc } from "drizzle-orm";
 import { actualAgg, vendorCapacityData, poLineItems, poHeaders, skus, projectionSnapshots, activeProjections } from "@shared/schema";
@@ -257,14 +257,14 @@ function mapVendorContact(contact: any) {
   if (!contact) return contact;
   return {
     id: contact.id,
-    vendorId: contact.vendor_id,
+    vendorId: contact.vendorId ?? contact.vendor_id,
     name: contact.name,
     phone: contact.phone,
     email: contact.email,
     role: contact.role,
-    isPrimary: contact.is_primary,
-    createdAt: contact.created_at,
-    updatedAt: contact.updated_at,
+    isPrimary: contact.isPrimary ?? contact.is_primary,
+    createdAt: contact.createdAt ?? contact.created_at,
+    updatedAt: contact.updatedAt ?? contact.updated_at,
   };
 }
 
@@ -1900,7 +1900,7 @@ export async function registerRoutes(app: Express) {
       }
 
       // Get clients assigned to this staff member
-      const assignments = await storage.getClientsForStaff(staff.id);
+      const assignments = await staffService.getClientsForStaff(staff.id);
       res.json(assignments);
     } catch (error: any) {
       console.error("Error fetching user clients:", error);
@@ -1946,7 +1946,7 @@ export async function registerRoutes(app: Express) {
   app.get("/api/clients/:id/staff-assignments", async (req: Express.Request, res: Response) => {
     try {
       const id = parseInt(req.params.id);
-      const assignments = await storage.getStaffClientAssignments(id);
+      const assignments = await staffService.getStaffClientAssignments(id);
       res.json(assignments);
     } catch (error: any) {
       res.status(500).json({ error: error.message });
@@ -1957,7 +1957,7 @@ export async function registerRoutes(app: Express) {
     try {
       const clientId = parseInt(req.params.id);
       const { staffId, role, isPrimary } = req.body;
-      await storage.assignStaffToClient(staffId, clientId, role || 'merchandiser', isPrimary || false);
+      await staffService.assignStaffToClient(staffId, clientId, role || 'merchandiser', isPrimary || false);
       res.status(201).json({ success: true });
     } catch (error: any) {
       res.status(500).json({ error: error.message });
@@ -1968,7 +1968,7 @@ export async function registerRoutes(app: Express) {
     try {
       const clientId = parseInt(req.params.clientId);
       const staffId = parseInt(req.params.staffId);
-      await storage.removeStaffFromClient(staffId, clientId);
+      await staffService.removeStaffFromClient(staffId, clientId);
       res.json({ success: true });
     } catch (error: any) {
       res.status(500).json({ error: error.message });
@@ -1979,7 +1979,7 @@ export async function registerRoutes(app: Express) {
   app.get("/api/staff/:id/client-assignments", async (req: Express.Request, res: Response) => {
     try {
       const staffId = parseInt(req.params.id);
-      const assignments = await storage.getClientsForStaff(staffId);
+      const assignments = await staffService.getClientsForStaff(staffId);
       res.json(assignments);
     } catch (error: any) {
       res.status(500).json({ error: error.message });
@@ -1990,7 +1990,7 @@ export async function registerRoutes(app: Express) {
     try {
       const staffId = parseInt(req.params.id);
       const { clientId, role, isPrimary } = req.body;
-      await storage.assignStaffToClient(staffId, clientId, role || 'merchandiser', isPrimary || false);
+      await staffService.assignStaffToClient(staffId, clientId, role || 'merchandiser', isPrimary || false);
       res.status(201).json({ success: true });
     } catch (error: any) {
       res.status(500).json({ error: error.message });
@@ -2001,7 +2001,7 @@ export async function registerRoutes(app: Express) {
     try {
       const staffId = parseInt(req.params.staffId);
       const clientId = parseInt(req.params.clientId);
-      await storage.removeStaffFromClient(staffId, clientId);
+      await staffService.removeStaffFromClient(staffId, clientId);
       res.json({ success: true });
     } catch (error: any) {
       res.status(500).json({ error: error.message });
@@ -2030,7 +2030,7 @@ export async function registerRoutes(app: Express) {
       const filters: { client?: string } = {};
       if (client) filters.client = client as string;
 
-      const vendors = await storage.getVendors(filters);
+      const vendors = await vendorService.getVendors(filters);
       res.json(vendors);
     } catch (error: any) {
       res.status(500).json({ error: error.message });
@@ -2040,7 +2040,7 @@ export async function registerRoutes(app: Express) {
   app.get("/api/vendors/:id", async (req: Express.Request, res: Response) => {
     try {
       const id = parseInt(req.params.id);
-      const vendor = await storage.getVendorById(id);
+      const vendor = await vendorService.getVendorById(id);
 
       if (!vendor) {
         return res.status(404).json({ error: "Vendor not found" });
@@ -2055,7 +2055,7 @@ export async function registerRoutes(app: Express) {
   app.post("/api/vendors", async (req: Express.Request, res: Response) => {
     try {
       const validated = insertVendorSchema.parse(req.body);
-      const vendor = await storage.createVendor(validated);
+      const vendor = await vendorService.createVendor(validated);
       res.status(201).json(vendor);
     } catch (error: any) {
       if (error instanceof z.ZodError) {
@@ -2068,7 +2068,7 @@ export async function registerRoutes(app: Express) {
   app.patch("/api/vendors/:id", async (req: Express.Request, res: Response) => {
     try {
       const id = parseInt(req.params.id);
-      const vendor = await storage.updateVendor(id, req.body);
+      const vendor = await vendorService.updateVendor(id, req.body);
 
       if (!vendor) {
         return res.status(404).json({ error: "Vendor not found" });
@@ -2085,7 +2085,7 @@ export async function registerRoutes(app: Express) {
       const id = parseInt(req.params.id);
       const startDate = req.query.startDate ? new Date(req.query.startDate as string) : undefined;
       const endDate = req.query.endDate ? new Date(req.query.endDate as string) : undefined;
-      const performance = await storage.getVendorDetailPerformance(id, startDate, endDate);
+      const performance = await vendorService.getVendorDetailPerformance(id, startDate, endDate);
       res.json(performance);
     } catch (error: any) {
       res.status(500).json({ error: error.message });
@@ -2095,7 +2095,7 @@ export async function registerRoutes(app: Express) {
   app.get("/api/vendors/:id/skus", async (req: Express.Request, res: Response) => {
     try {
       const id = parseInt(req.params.id);
-      const skus = await storage.getVendorSkus(id);
+      const skus = await vendorService.getVendorSkus(id);
       res.json(skus);
     } catch (error: any) {
       res.status(500).json({ error: error.message });
@@ -2165,7 +2165,7 @@ export async function registerRoutes(app: Express) {
       const id = parseInt(req.params.id);
       const startDate = req.query.startDate ? new Date(req.query.startDate as string) : undefined;
       const endDate = req.query.endDate ? new Date(req.query.endDate as string) : undefined;
-      const vendor = await storage.getVendorById(id);
+      const vendor = await vendorService.getVendorById(id);
 
       if (!vendor) {
         return res.status(404).json({ error: "Vendor not found" });
@@ -2285,13 +2285,13 @@ export async function registerRoutes(app: Express) {
       const requesterRole = req.session.staffRole!;
 
       // Check if requester can view this staff member's goals
-      const canView = await canViewStaffKPIs(requesterId, requesterRole, targetStaffId, storage);
+      const canView = await canViewStaffKPIs(requesterId, requesterRole, targetStaffId, staffService);
       if (!canView) {
         return res.status(403).json({ error: "You don't have permission to view this staff member's goals" });
       }
 
       const year = req.query.year ? parseInt(req.query.year as string) : undefined;
-      const goals = await storage.getStaffGoals(targetStaffId, year);
+      const goals = await staffService.getStaffGoals(targetStaffId, year);
       res.json(goals);
     } catch (error: any) {
       res.status(500).json({ error: error.message });
@@ -2304,12 +2304,12 @@ export async function registerRoutes(app: Express) {
 
       // Check if staff already has 5 goals for this year
       const year = req.body.reviewYear || new Date().getFullYear();
-      const existingGoals = await storage.getStaffGoals(staffId, year);
+      const existingGoals = await staffService.getStaffGoals(staffId, year);
       if (existingGoals.length >= 5) {
         return res.status(400).json({ error: "Maximum of 5 goals per review year" });
       }
 
-      const goal = await storage.createStaffGoal({
+      const goal = await staffService.createStaffGoal({
         ...req.body,
         staffId,
         priority: existingGoals.length + 1,
@@ -2323,7 +2323,7 @@ export async function registerRoutes(app: Express) {
   app.get("/api/goals/:goalId", async (req: Express.Request, res: Response) => {
     try {
       const goalId = parseInt(req.params.goalId);
-      const goal = await storage.getStaffGoalById(goalId);
+      const goal = await staffService.getStaffGoalById(goalId);
       if (!goal) {
         return res.status(404).json({ error: "Goal not found" });
       }
@@ -2336,7 +2336,7 @@ export async function registerRoutes(app: Express) {
   app.patch("/api/goals/:goalId", async (req: Express.Request, res: Response) => {
     try {
       const goalId = parseInt(req.params.goalId);
-      const goal = await storage.updateStaffGoal(goalId, req.body);
+      const goal = await staffService.updateStaffGoal(goalId, req.body);
       if (!goal) {
         return res.status(404).json({ error: "Goal not found" });
       }
@@ -2349,7 +2349,7 @@ export async function registerRoutes(app: Express) {
   app.delete("/api/goals/:goalId", async (req: Express.Request, res: Response) => {
     try {
       const goalId = parseInt(req.params.goalId);
-      const deleted = await storage.deleteStaffGoal(goalId);
+      const deleted = await staffService.deleteStaffGoal(goalId);
       if (!deleted) {
         return res.status(404).json({ error: "Goal not found" });
       }
@@ -2363,7 +2363,7 @@ export async function registerRoutes(app: Express) {
   app.get("/api/goals/:goalId/progress", async (req: Express.Request, res: Response) => {
     try {
       const goalId = parseInt(req.params.goalId);
-      const entries = await storage.getGoalProgressEntries(goalId);
+      const entries = await staffService.getGoalProgressEntries(goalId);
       res.json(entries);
     } catch (error: any) {
       res.status(500).json({ error: error.message });
@@ -2373,7 +2373,7 @@ export async function registerRoutes(app: Express) {
   app.post("/api/goals/:goalId/progress", async (req: Express.Request, res: Response) => {
     try {
       const goalId = parseInt(req.params.goalId);
-      const entry = await storage.createGoalProgressEntry({
+      const entry = await staffService.createGoalProgressEntry({
         ...req.body,
         goalId,
       });
@@ -2386,7 +2386,7 @@ export async function registerRoutes(app: Express) {
   app.delete("/api/progress/:entryId", async (req: Express.Request, res: Response) => {
     try {
       const entryId = parseInt(req.params.entryId);
-      const deleted = await storage.deleteGoalProgressEntry(entryId);
+      const deleted = await staffService.deleteGoalProgressEntry(entryId);
       if (!deleted) {
         return res.status(404).json({ error: "Progress entry not found" });
       }
@@ -2411,7 +2411,7 @@ export async function registerRoutes(app: Express) {
   app.get("/api/vendors/:id/contacts", async (req: Express.Request, res: Response) => {
     try {
       const vendorId = parseInt(req.params.id);
-      const contacts = await storage.getVendorContacts(vendorId);
+      const contacts = await vendorContactService.getVendorContacts(vendorId);
       const mapped = contacts.map(mapVendorContact);
       res.json(mapped);
     } catch (error: any) {
@@ -5775,7 +5775,7 @@ Format your response as JSON with the following structure:
 
           let vendor = await storage.getVendorByName(vendorName);
           if (!vendor) {
-            vendor = await storage.createVendor({
+            vendor = await vendorService.createVendor({
               name: vendorName,
               status: "active",
             });
@@ -9079,7 +9079,7 @@ RESPONSE GUIDELINES:
       }
 
       // Look up vendor to get vendor code
-      const vendor = await storage.getVendorById(vendorId);
+      const vendor = await vendorService.getVendorById(vendorId);
       if (!vendor) {
         res.status(404).json({ error: "Vendor not found" });
         return;
@@ -9495,7 +9495,7 @@ RESPONSE GUIDELINES:
       };
 
       // Get vendor name lookup for exports
-      const vendorList = await storage.getVendors();
+      const vendorList = await vendorService.getVendors();
       const vendorMap = new Map(vendorList.map(v => [v.id, v.name]));
 
       // Get data based on active tab
@@ -11713,7 +11713,7 @@ RESPONSE GUIDELINES:
       // Build vendor lookups - by CBH code (primary) and by name (fallback)
       const vendorsByCbhCode = new Map<string, any>();
       const vendorsByName = new Map<string, any>();
-      const vendors = await storage.getVendors();
+      const vendors = await vendorService.getVendors();
 
       for (const v of vendors) {
         // Primary lookup: CBH vendor code (if stored from previous imports)
@@ -12166,7 +12166,7 @@ RESPONSE GUIDELINES:
       let cbhCodesUpdated = 0;
       for (const [vendorId, cbhCode] of cbhCodeUpdates.entries()) {
         try {
-          await storage.updateVendor(vendorId, { cbhVendorCode: cbhCode });
+          await vendorService.updateVendor(vendorId, { cbhVendorCode: cbhCode });
           cbhCodesUpdated++;
         } catch (err) {
           // Non-critical, just log it
@@ -12298,7 +12298,7 @@ RESPONSE GUIDELINES:
 
         if (decision.action === 'createNew') {
           // Create new vendor
-          const newVendor = await storage.createVendor({
+          const newVendor = await vendorService.createVendor({
             name: data.vendorName || data.vendorCode,
             cbhVendorCode: data.vendorCode || null,
             status: 'active',
