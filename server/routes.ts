@@ -1,5 +1,5 @@
 import type { Express, Response } from "express";
-import { storage } from "./storage";
+import { storage, logService } from "./storage";
 import { db } from "./db";
 import { sql, eq, and, or, inArray, isNull, desc } from "drizzle-orm";
 import { actualAgg, vendorCapacityData, poLineItems, poHeaders, skus, projectionSnapshots, activeProjections } from "@shared/schema";
@@ -5846,7 +5846,7 @@ Format your response as JSON with the following structure:
         return res.status(400).json({ error: "Invalid entity type. Must be 'po' or 'sku'" });
       }
 
-      const logs = await storage.getActivityLogsByEntity(entityType, entityId);
+      const logs = await logService.getActivityLogsByEntity(entityType, entityId);
       res.json(logs);
     } catch (error: any) {
       res.status(500).json({ error: error.message });
@@ -5861,7 +5861,7 @@ Format your response as JSON with the following structure:
         return res.status(400).json({ error: fromZodError(parsed.error).message });
       }
 
-      const log = await storage.createActivityLog({
+      const log = await logService.createActivityLog({
         ...parsed.data,
         createdBy: req.user?.username || parsed.data.createdBy,
       });
@@ -5879,12 +5879,12 @@ Format your response as JSON with the following structure:
         return res.status(400).json({ error: "Invalid log ID" });
       }
 
-      const existing = await storage.getActivityLogById(id);
+      const existing = await logService.getActivityLogById(id);
       if (!existing) {
         return res.status(404).json({ error: "Activity log not found" });
       }
 
-      const updated = await storage.updateActivityLog(id, req.body);
+      const updated = await logService.updateActivityLog(id, req.body);
       res.json(updated);
     } catch (error: any) {
       res.status(500).json({ error: error.message });
@@ -5899,12 +5899,12 @@ Format your response as JSON with the following structure:
         return res.status(400).json({ error: "Invalid log ID" });
       }
 
-      const existing = await storage.getActivityLogById(id);
+      const existing = await logService.getActivityLogById(id);
       if (!existing) {
         return res.status(404).json({ error: "Activity log not found" });
       }
 
-      const completed = await storage.markActivityLogComplete(id);
+      const completed = await logService.markActivityLogComplete(id);
       res.json(completed);
     } catch (error: any) {
       res.status(500).json({ error: error.message });
@@ -5915,7 +5915,7 @@ Format your response as JSON with the following structure:
   app.get("/api/my-tasks", async (req: Request, res: Response) => {
     try {
       const createdBy = req.query.createdBy as string | undefined;
-      const tasks = await storage.getPendingActionsByUser(createdBy);
+      const tasks = await logService.getPendingActionsByUser(createdBy);
       res.json(tasks);
     } catch (error: any) {
       res.status(500).json({ error: error.message });
