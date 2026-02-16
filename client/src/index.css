@@ -1,0 +1,470 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* LIGHT MODE */
+:root {
+  --button-outline: rgba(0,0,0, .10);
+  --badge-outline: rgba(0,0,0, .05);
+  --opaque-button-border-intensity: -8;
+  --elevate-1: rgba(0,0,0, .03);
+  --elevate-2: rgba(0,0,0, .08);
+  --background: 210 5% 98%;
+  --foreground: 210 6% 12%;
+  --border: 210 6% 90%;
+  --card: 210 5% 96%;
+  --card-foreground: 210 6% 12%;
+  --card-border: 210 6% 92%;
+  --sidebar: 0 80% 42%;
+  --sidebar-foreground: 0 0% 100%;
+  --sidebar-border: 0 70% 35%;
+  --sidebar-primary: 0 0% 100%;
+  --sidebar-primary-foreground: 0 80% 42%;
+  --sidebar-accent: 0 75% 35%;
+  --sidebar-accent-foreground: 0 0% 100%;
+  --sidebar-ring: 0 0% 100%;
+  --popover: 210 6% 92%;
+  --popover-foreground: 210 6% 12%;
+  --popover-border: 210 6% 86%;
+  --primary: 210 85% 42%;
+  --primary-foreground: 210 20% 98%;
+  --secondary: 210 8% 86%;
+  --secondary-foreground: 210 6% 15%;
+  --muted: 210 8% 90%;
+  --muted-foreground: 210 5% 35%;
+  --accent: 210 10% 91%;
+  --accent-foreground: 210 6% 15%;
+  --destructive: 0 75% 42%;
+  --destructive-foreground: 0 20% 98%;
+  --input: 210 12% 75%;
+  --ring: 210 85% 45%;
+  --chart-1: 210 85% 35%;
+  --chart-2: 190 75% 35%;
+  --chart-3: 30 80% 40%;
+  --chart-4: 270 70% 35%;
+  --chart-5: 150 65% 32%;
+  --font-sans: 'IBM Plex Sans', system-ui, sans-serif;
+  --font-serif: Georgia, serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+  --radius: .5rem;
+  --shadow-2xs: 0px 2px 0px 0px hsl(210 5% 10% / 0.00);
+  --shadow-xs: 0px 2px 0px 0px hsl(210 5% 10% / 0.00);
+  --shadow-sm: 0px 2px 0px 0px hsl(210 5% 10% / 0.00), 0px 1px 2px -1px hsl(210 5% 10% / 0.00);
+  --shadow: 0px 2px 0px 0px hsl(210 5% 10% / 0.00), 0px 1px 2px -1px hsl(210 5% 10% / 0.00);
+  --shadow-md: 0px 2px 0px 0px hsl(210 5% 10% / 0.00), 0px 2px 4px -1px hsl(210 5% 10% / 0.00);
+  --shadow-lg: 0px 2px 0px 0px hsl(210 5% 10% / 0.00), 0px 4px 6px -1px hsl(210 5% 10% / 0.00);
+  --shadow-xl: 0px 2px 0px 0px hsl(210 5% 10% / 0.00), 0px 8px 10px -1px hsl(210 5% 10% / 0.00);
+  --shadow-2xl: 0px 2px 0px 0px hsl(210 5% 10% / 0.00);
+  --tracking-normal: 0em;
+  --spacing: 0.25rem;
+
+/* Fallback for older browsers */
+  --sidebar-primary-border: hsl(var(--sidebar-primary));
+  --sidebar-primary-border: hsl(from hsl(var(--sidebar-primary)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
+
+  /* Fallback for older browsers */
+  --sidebar-accent-border: hsl(var(--sidebar-accent));
+  --sidebar-accent-border: hsl(from hsl(var(--sidebar-accent)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
+
+  /* Fallback for older browsers */
+  --primary-border: hsl(var(--primary));
+  --primary-border: hsl(from hsl(var(--primary)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
+
+  /* Fallback for older browsers */
+  --secondary-border: hsl(var(--secondary));
+  --secondary-border: hsl(from hsl(var(--secondary)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
+
+  /* Fallback for older browsers */
+  --muted-border: hsl(var(--muted));
+  --muted-border: hsl(from hsl(var(--muted)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
+
+  /* Fallback for older browsers */
+  --accent-border: hsl(var(--accent));
+  --accent-border: hsl(from hsl(var(--accent)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
+
+  /* Fallback for older browsers */
+  --destructive-border: hsl(var(--destructive));
+  --destructive-border: hsl(from hsl(var(--destructive)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
+}
+
+.dark {
+  --button-outline: rgba(255,255,255, .10);
+  --badge-outline: rgba(255,255,255, .05);
+  --opaque-button-border-intensity: 9;
+  --elevate-1: rgba(255,255,255, .04);
+  --elevate-2: rgba(255,255,255, .09);
+  --background: 210 4% 8%;
+  --foreground: 210 5% 96%;
+  --border: 210 4% 18%;
+  --card: 210 4% 10%;
+  --card-foreground: 210 5% 96%;
+  --card-border: 210 4% 14%;
+  --sidebar: 0 80% 42%;
+  --sidebar-foreground: 0 0% 100%;
+  --sidebar-border: 0 70% 35%;
+  --sidebar-primary: 0 0% 100%;
+  --sidebar-primary-foreground: 0 80% 42%;
+  --sidebar-accent: 0 75% 35%;
+  --sidebar-accent-foreground: 0 0% 100%;
+  --sidebar-ring: 0 0% 100%;
+  --popover: 210 4% 14%;
+  --popover-foreground: 210 5% 96%;
+  --popover-border: 210 4% 18%;
+  --primary: 210 85% 42%;
+  --primary-foreground: 210 20% 98%;
+  --secondary: 210 6% 18%;
+  --secondary-foreground: 210 5% 90%;
+  --muted: 210 6% 16%;
+  --muted-foreground: 210 5% 65%;
+  --accent: 210 6% 14%;
+  --accent-foreground: 210 5% 90%;
+  --destructive: 0 75% 42%;
+  --destructive-foreground: 0 20% 98%;
+  --input: 210 12% 30%;
+  --ring: 210 85% 45%;
+  --chart-1: 210 85% 65%;
+  --chart-2: 190 75% 65%;
+  --chart-3: 30 80% 65%;
+  --chart-4: 270 70% 65%;
+  --chart-5: 150 65% 60%;
+  --shadow-2xs: 0px 2px 0px 0px hsl(210 4% 2% / 0.00);
+  --shadow-xs: 0px 2px 0px 0px hsl(210 4% 2% / 0.00);
+  --shadow-sm: 0px 2px 0px 0px hsl(210 4% 2% / 0.00), 0px 1px 2px -1px hsl(210 4% 2% / 0.00);
+  --shadow: 0px 2px 0px 0px hsl(210 4% 2% / 0.00), 0px 1px 2px -1px hsl(210 4% 2% / 0.00);
+  --shadow-md: 0px 2px 0px 0px hsl(210 4% 2% / 0.00), 0px 2px 4px -1px hsl(210 4% 2% / 0.00);
+  --shadow-lg: 0px 2px 0px 0px hsl(210 4% 2% / 0.00), 0px 4px 6px -1px hsl(210 4% 2% / 0.00);
+  --shadow-xl: 0px 2px 0px 0px hsl(210 4% 2% / 0.00), 0px 8px 10px -1px hsl(210 4% 2% / 0.00);
+  --shadow-2xl: 0px 2px 0px 0px hsl(210 4% 2% / 0.00);
+
+/* Fallback for older browsers */
+  --sidebar-primary-border: hsl(var(--sidebar-primary));
+  --sidebar-primary-border: hsl(from hsl(var(--sidebar-primary)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
+
+  /* Fallback for older browsers */
+  --sidebar-accent-border: hsl(var(--sidebar-accent));
+  --sidebar-accent-border: hsl(from hsl(var(--sidebar-accent)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
+
+  /* Fallback for older browsers */
+  --primary-border: hsl(var(--primary));
+  --primary-border: hsl(from hsl(var(--primary)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
+
+  /* Fallback for older browsers */
+  --secondary-border: hsl(var(--secondary));
+  --secondary-border: hsl(from hsl(var(--secondary)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
+
+  /* Fallback for older browsers */
+  --muted-border: hsl(var(--muted));
+  --muted-border: hsl(from hsl(var(--muted)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
+
+  /* Fallback for older browsers */
+  --accent-border: hsl(var(--accent));
+  --accent-border: hsl(from hsl(var(--accent)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
+
+  /* Fallback for older browsers */
+  --destructive-border: hsl(var(--destructive));
+  --destructive-border: hsl(from hsl(var(--destructive)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-sans antialiased bg-background text-foreground;
+  }
+}
+
+/**
+ * Using the elevate system.
+ * Automatic contrast adjustment.
+ *
+ * <element className="hover-elevate" />
+ * <element className="active-elevate-2" />
+ *
+ * // Using the tailwind utility when a data attribute is "on"
+ * <element className="toggle-elevate data-[state=on]:toggle-elevated" />
+ * // Or manually controlling the toggle state
+ * <element className="toggle-elevate toggle-elevated" />
+ *
+ * Elevation systems have to handle many states.
+ * - not-hovered, vs. hovered vs. active  (three mutually exclusive states)
+ * - toggled or not
+ * - focused or not (this is not handled with these utilities)
+ *
+ * Even without handling focused or not, this is six possible combinations that
+ * need to be distinguished from eachother visually.
+ */
+@layer utilities {
+
+  /* Hide ugly search cancel button in Chrome until we can style it properly */
+  input[type="search"]::-webkit-search-cancel-button {
+    @apply hidden;
+  }
+
+  /* Placeholder styling for contentEditable div */
+  [contenteditable][data-placeholder]:empty::before {
+    content: attr(data-placeholder);
+    color: hsl(var(--muted-foreground));
+    pointer-events: none;
+  }
+
+  /* .no-default-hover-elevate/no-default-active-elevate is an escape hatch so consumers of
+   * buttons/badges can remove the automatic brightness adjustment on interactions
+   * and program their own. */
+  .no-default-hover-elevate {}
+
+  .no-default-active-elevate {}
+
+
+  /**
+   * Toggleable backgrounds go behind the content. Hoverable/active goes on top.
+   * This way they can stack/compound. Both will overlap the parent's borders!
+   * So borders will be automatically adjusted both on toggle, and hover/active,
+   * and they will be compounded.
+   */
+  .toggle-elevate::before,
+  .toggle-elevate-2::before {
+    content: "";
+    pointer-events: none;
+    position: absolute;
+    inset: 0px;
+    /*border-radius: inherit;   match rounded corners */
+    border-radius: inherit;
+    z-index: -1;
+    /* sits behind content but above backdrop */
+  }
+
+  .toggle-elevate.toggle-elevated::before {
+    background-color: var(--elevate-2);
+  }
+
+  /* If there's a 1px border, adjust the inset so that it covers that parent's border */
+  .border.toggle-elevate::before {
+    inset: -1px;
+  }
+
+  /* Does not work on elements with overflow:hidden! */
+  .hover-elevate:not(.no-default-hover-elevate),
+  .active-elevate:not(.no-default-active-elevate),
+  .hover-elevate-2:not(.no-default-hover-elevate),
+  .active-elevate-2:not(.no-default-active-elevate) {
+    position: relative;
+    z-index: 0;
+  }
+
+  .hover-elevate:not(.no-default-hover-elevate)::after,
+  .active-elevate:not(.no-default-active-elevate)::after,
+  .hover-elevate-2:not(.no-default-hover-elevate)::after,
+  .active-elevate-2:not(.no-default-active-elevate)::after {
+    content: "";
+    pointer-events: none;
+    position: absolute;
+    inset: 0px;
+    /*border-radius: inherit;   match rounded corners */
+    border-radius: inherit;
+    z-index: 999;
+    /* sits in front of content */
+  }
+
+  .hover-elevate:hover:not(.no-default-hover-elevate)::after,
+  .active-elevate:active:not(.no-default-active-elevate)::after {
+    background-color: var(--elevate-1);
+  }
+
+  .hover-elevate-2:hover:not(.no-default-hover-elevate)::after,
+  .active-elevate-2:active:not(.no-default-active-elevate)::after {
+    background-color: var(--elevate-2);
+  }
+
+  /* If there's a 1px border, adjust the inset so that it covers that parent's border */
+  .border.hover-elevate:not(.no-hover-interaction-elevate)::after,
+  .border.active-elevate:not(.no-active-interaction-elevate)::after,
+  .border.hover-elevate-2:not(.no-hover-interaction-elevate)::after,
+  .border.active-elevate-2:not(.no-active-interaction-elevate)::after,
+  .border.hover-elevate:not(.no-hover-interaction-elevate)::after {
+    inset: -1px;
+  }
+}
+
+/* Print-only elements (hidden on screen, visible in print) */
+.print-only {
+  display: none;
+}
+
+/* Print styles for PDF export */
+@media print {
+  /* Show print-only elements */
+  .print-only {
+    display: inline !important;
+  }
+
+  /* Hide app shell elements and interactive controls */
+  [data-sidebar],
+  .sidebar,
+  [data-testid="button-sidebar-toggle"],
+  .app-header,
+  .no-print {
+    display: none !important;
+  }
+
+  /* Reset page layout for printing */
+  body {
+    background: white !important;
+    color: #1a1a1a !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    font-size: 11pt !important;
+  }
+
+  /* Make content full width */
+  main,
+  .main-content,
+  [role="main"] {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0.5rem !important;
+  }
+
+  /* Report container styling */
+  .print-report {
+    gap: 0.75rem !important;
+  }
+
+  /* Report title styling */
+  .print-title {
+    font-size: 18pt !important;
+    font-weight: 700 !important;
+    color: #1a1a1a !important;
+    margin-bottom: 0.25rem !important;
+  }
+
+  .print-subtitle {
+    font-size: 10pt !important;
+    color: #666 !important;
+  }
+
+  /* KPI Cards - force horizontal layout */
+  .print-kpi-row {
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 0.5rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  .print-kpi-card {
+    flex: 1 !important;
+    min-width: 0 !important;
+    padding: 0.5rem !important;
+    border: 1px solid #e0e0e0 !important;
+    background: #fafafa !important;
+    box-shadow: none !important;
+    border-radius: 4px !important;
+  }
+
+  .print-kpi-header {
+    padding: 0 0.5rem 0.25rem 0.5rem !important;
+  }
+
+  .print-kpi-content {
+    padding: 0 0.5rem 0.5rem 0.5rem !important;
+  }
+
+  .print-kpi-value {
+    font-size: 16pt !important;
+    font-weight: 700 !important;
+  }
+
+  .print-kpi-icon {
+    width: 14px !important;
+    height: 14px !important;
+  }
+
+  /* General card styling for print */
+  .card,
+  [class*="Card"] {
+    break-inside: avoid;
+    box-shadow: none !important;
+    border: 1px solid #e0e0e0 !important;
+    background: white !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  /* Table styling for print - compact and professional */
+  table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    font-size: 8pt !important;
+  }
+
+  th {
+    background-color: #f5f5f5 !important;
+    border: 1px solid #ddd !important;
+    padding: 4px 6px !important;
+    font-weight: 600 !important;
+    text-align: left !important;
+  }
+
+  td {
+    border: 1px solid #ddd !important;
+    padding: 3px 6px !important;
+  }
+
+  /* Chart containers - ensure they print */
+  .recharts-wrapper {
+    break-inside: avoid;
+    max-height: 250px !important;
+  }
+
+  /* Chart card specific styling */
+  .print-chart-card {
+    page-break-inside: avoid;
+    margin-bottom: 0.5rem !important;
+  }
+
+  /* Page breaks */
+  .page-break {
+    page-break-before: always;
+  }
+
+  /* Ensure headers stay with content */
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid;
+  }
+
+  /* Card headers for charts */
+  [class*="CardHeader"] {
+    padding: 0.5rem !important;
+  }
+
+  [class*="CardTitle"] {
+    font-size: 12pt !important;
+    font-weight: 600 !important;
+  }
+
+  [class*="CardDescription"] {
+    font-size: 9pt !important;
+  }
+
+  [class*="CardContent"] {
+    padding: 0.5rem !important;
+  }
+
+  /* Hide scrollbars and overflow */
+  * {
+    overflow: visible !important;
+  }
+
+  /* Progress bar styling for utilization */
+  [class*="Progress"] {
+    height: 6px !important;
+    border-radius: 3px !important;
+  }
+
+  /* Set reasonable page margins - landscape for data tables */
+  @page {
+    margin: 0.4in;
+    size: landscape;
+  }
+}
