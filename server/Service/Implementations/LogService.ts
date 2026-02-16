@@ -17,7 +17,7 @@ export class LogService implements ILogService {
     }
 
     async createActivityLog(log: InsertActivityLog): Promise<ActivityLog> {
-        const result = await db.insert(activityLogs).values(log).returning();
+        const result = await db.insert(activityLogs).values(log as any).returning();
         return result[0];
     }
 
