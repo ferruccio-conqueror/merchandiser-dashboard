@@ -93,4 +93,7 @@ export interface ComplianceFilters {
   endDate?: Date;
 }
 
+import { LogService } from "./Service/Implementations/LogService";
+
 export const storage = new DbStorage();
+export const logService = new LogService();
