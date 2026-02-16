@@ -73,11 +73,11 @@ const pendingImports = new Map<string, PendingImportData>();
 // Clean up expired pending imports every 10 minutes
 setInterval(() => {
   let now = new Date();
-  for (const [key, data] of pendingImports.entries()) {
+  pendingImports.entries().forEach(([key, data]) => {
     if (data.expiresAt < now) {
       pendingImports.delete(key);
     }
-  }
+  })
 }, 10 * 60 * 1000);
 
 // Helper function to find a column value by normalizing whitespace in column names
