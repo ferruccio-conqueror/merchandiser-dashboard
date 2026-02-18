@@ -99,8 +99,18 @@ import { StaffService } from "./Service/Implementations/StaffService";
 import { VendorService } from "./Service/Implementations/VendorService";
 import { VendorContactService } from "./Service/Implementations/VendorContactService";
 import { PurchaseOrderService } from "./Service/Implementations/PurchaseOrderService";
-import { POHeaderService } from "./Service/Implementations/PoHeaderService";
+import { POHeaderService } from "./Service/Implementations/POHeaderService";
 import { SKUService } from "./Service/Implementations/SKUService";
+import { ClientOperationService } from "./Service/Implementations/ClientOperationService";
+import { StaffGoalsService } from "./Service/Implementations/StaffGoalsService";
+import { InspectionService } from "./Service/Implementations/InspectionService";
+import { ComplianceStylesOperations } from "./Service/Implementations/ComplianceStylesOperations";
+import { InspectionStatusReport } from "./Service/Implementations/InspectionStatusReport";
+import { QualityTestService } from "./Service/Implementations/QualityTestService";
+import { QualityAndComplianceDashboardService } from "./Service/Implementations/QualityAndComplianceDashboardService";
+import { TimelineOperationsService } from "./Service/Implementations/TimelineOperationsService";
+
+
 
 export const storage = new DbStorage();
 export const logService = new LogService();
@@ -111,3 +121,12 @@ export const vendorContactService = new VendorContactService();
 export const purchaseOrderService = new PurchaseOrderService();
 export const pOHeaderService = new POHeaderService();
 export const sKUService = new SKUService();
+export const clientOperationService = new ClientOperationService();
+export const staffGoalsService = new StaffGoalsService();
+export const inspectionService = new InspectionService();
+export const complianceStylesOperations = new ComplianceStylesOperations();
+export const inspectionStatusReport = new InspectionStatusReport();
+export const qualityTestService = new QualityTestService();
+export const qualityAndComplianceDashboardService = new QualityAndComplianceDashboardService();
+export const timelineOperationsService = new TimelineOperationsService();
+
