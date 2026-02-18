@@ -98,6 +98,9 @@ import { UserService } from "./Service/Implementations/UserService";
 import { StaffService } from "./Service/Implementations/StaffService";
 import { VendorService } from "./Service/Implementations/VendorService";
 import { VendorContactService } from "./Service/Implementations/VendorContactService";
+import { PurchaseOrderService } from "./Service/Implementations/PurchaseOrderService";
+import { POHeaderService } from "./Service/Implementations/PoHeaderService";
+import { SKUService } from "./Service/Implementations/SKUService";
 
 export const storage = new DbStorage();
 export const logService = new LogService();
@@ -105,3 +108,6 @@ export const userService = new UserService();
 export const staffService = new StaffService();
 export const vendorService = new VendorService();
 export const vendorContactService = new VendorContactService();
+export const purchaseOrderService = new PurchaseOrderService();
+export const pOHeaderService = new POHeaderService();
+export const sKUService = new SKUService();
