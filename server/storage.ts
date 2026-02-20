@@ -5,7 +5,7 @@ import { DbStorage } from "./Service/Implementations/DbStorage";
 // ============================================================================
 // IMPORTANT: This is the SINGLE SOURCE OF TRUTH for at-risk logic.
 // All at-risk calculations MUST use these constants and helpers.
-// 
+//
 // At-Risk Criteria (Updated January 2026):
 // 1. Failed final inspection
 // 2. Inline inspection not booked within 14 days of HOD (Hand-off Date)
@@ -60,7 +60,7 @@ export const AT_RISK_CTES = {
 // - skuColumn: column name for SKU (e.g., 'sku'), or null if SKU-level QA check not needed
 // - fiAlias: alias for failed_inspections CTE
 // - iibAlias: alias for inline_inspections_booked CTE
-// - fibAlias: alias for final_inspections_booked CTE  
+// - fibAlias: alias for final_inspections_booked CTE
 // - qapAlias: alias for qa_passed CTE (or null to skip QA check)
 export function getAtRiskConditionSql(
   fiAlias: string = 'fi',
@@ -93,6 +93,7 @@ export interface ComplianceFilters {
   endDate?: Date;
 }
 
+// Service imports - Coworker's services
 import { LogService } from "./Service/Implementations/LogService";
 import { UserService } from "./Service/Implementations/UserService";
 import { StaffService } from "./Service/Implementations/StaffService";
@@ -118,8 +119,17 @@ import { ShipmentWithPODataService } from "./Service/Implementations/ShipmentWit
 import { SKUColorPanelJunctionService } from "./Service/Implementations/SKUColorPanelJunctionService";
 import { VendorTimelineTemplateService } from "./Service/Implementations/VendorTimelineTemplateService";
 
+// Service imports - Sudarshan's unique services (9 services)
+import { ImportHistoryService } from "./Service/Implementations/ImportHistoryService";
+import { ColorPanelService } from "./Service/Implementations/ColorPanelService";
+import { ColorPanelHistoryService } from "./Service/Implementations/ColorPanelHistoryService";
+import { VendorCapacityService } from "./Service/Implementations/VendorCapacityService";
+import { NewCapacityDataService } from "./Service/Implementations/NewCapacityDataService";
+import { CategoryTimelineAveragesService } from "./Service/Implementations/CategoryTimelineAveragesService";
+import { CommunicationsService } from "./Service/Implementations/CommunicationsService";
+import { ClientOperationsService } from "./Service/Implementations/ClientOperationsService";
 
-
+// Service instances - Coworker's services
 export const storage = new DbStorage();
 export const logService = new LogService();
 export const userService = new UserService();
@@ -146,6 +156,12 @@ export const shipmentWithPODataService = new ShipmentWithPODataService();
 export const sKUColorPanelJunctionService = new SKUColorPanelJunctionService();
 export const vendorTimelineTemplateService = new VendorTimelineTemplateService();
 
-
-
-
+// Service instances - Sudarshan's unique services (9 services)
+export const importHistoryService = new ImportHistoryService();
+export const colorPanelService = new ColorPanelService();
+export const colorPanelHistoryService = new ColorPanelHistoryService();
+export const vendorCapacityService = new VendorCapacityService();
+export const newCapacityDataService = new NewCapacityDataService();
+export const categoryTimelineAveragesService = new CategoryTimelineAveragesService();
+export const communicationsService = new CommunicationsService();
+export const clientOperationsService = new ClientOperationsService();
