@@ -1,3 +1,5 @@
+import { InsertSku, Sku } from "@shared/schema";
+
 export interface ISKUService {
     // SKU operations
     getSkus(): Promise<Sku[]>;

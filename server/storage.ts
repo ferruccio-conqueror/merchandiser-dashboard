@@ -5,7 +5,7 @@ import { DbStorage } from "./Service/Implementations/DbStorage";
 // ============================================================================
 // IMPORTANT: This is the SINGLE SOURCE OF TRUTH for at-risk logic.
 // All at-risk calculations MUST use these constants and helpers.
-// 
+//
 // At-Risk Criteria (Updated January 2026):
 // 1. Failed final inspection
 // 2. Inline inspection not booked within 14 days of HOD (Hand-off Date)
@@ -60,7 +60,7 @@ export const AT_RISK_CTES = {
 // - skuColumn: column name for SKU (e.g., 'sku'), or null if SKU-level QA check not needed
 // - fiAlias: alias for failed_inspections CTE
 // - iibAlias: alias for inline_inspections_booked CTE
-// - fibAlias: alias for final_inspections_booked CTE  
+// - fibAlias: alias for final_inspections_booked CTE
 // - qapAlias: alias for qa_passed CTE (or null to skip QA check)
 export function getAtRiskConditionSql(
   fiAlias: string = 'fi',
@@ -93,51 +93,75 @@ export interface ComplianceFilters {
   endDate?: Date;
 }
 
-// Existing service imports
+// Service imports - Coworker's services
 import { LogService } from "./Service/Implementations/LogService";
 import { UserService } from "./Service/Implementations/UserService";
 import { StaffService } from "./Service/Implementations/StaffService";
 import { VendorService } from "./Service/Implementations/VendorService";
 import { VendorContactService } from "./Service/Implementations/VendorContactService";
+import { PurchaseOrderService } from "./Service/Implementations/PurchaseOrderService";
+import { POHeaderService } from "./Service/Implementations/POHeaderService";
+import { SKUService } from "./Service/Implementations/SKUService";
+import { ClientOperationService } from "./Service/Implementations/ClientOperationService";
+import { StaffGoalsService } from "./Service/Implementations/StaffGoalsService";
+import { InspectionService } from "./Service/Implementations/InspectionService";
+import { ComplianceStylesOperations } from "./Service/Implementations/ComplianceStylesOperations";
+import { InspectionStatusReport } from "./Service/Implementations/InspectionStatusReport";
+import { QualityTestService } from "./Service/Implementations/QualityTestService";
+import { QualityAndComplianceDashboardService } from "./Service/Implementations/QualityAndComplianceDashboardService";
+import { TimelineOperationsService } from "./Service/Implementations/TimelineOperationsService";
+import { OTDBreakdownService } from "./Service/Implementations/OTDBreakdownService";
+import { POTaskService } from "./Service/Implementations/POTaskService";
+import { POTimelineService } from "./Service/Implementations/POTimelineService";
+import { ProjectionMatchingAndValidationService } from "./Service/Implementations/ProjectionMatchingAndValidationService";
+import { QualityDashboardService } from "./Service/Implementations/QualityDashboardService";
+import { ShipmentWithPODataService } from "./Service/Implementations/ShipmentWithPODataService";
+import { SKUColorPanelJunctionService } from "./Service/Implementations/SKUColorPanelJunctionService";
+import { VendorTimelineTemplateService } from "./Service/Implementations/VendorTimelineTemplateService";
 
-// New service imports - Sudarshan's services (15 services)
+// Service imports - Sudarshan's unique services (9 services)
 import { ImportHistoryService } from "./Service/Implementations/ImportHistoryService";
 import { ColorPanelService } from "./Service/Implementations/ColorPanelService";
-import { POHeaderService } from "./Service/Implementations/POHeaderService";
 import { ColorPanelHistoryService } from "./Service/Implementations/ColorPanelHistoryService";
-import { SKUColorPanelJunctionService } from "./Service/Implementations/SKUColorPanelJunctionService";
-import { POTasksService } from "./Service/Implementations/POTasksService";
-import { POTimelineService } from "./Service/Implementations/POTimelineService";
 import { VendorCapacityService } from "./Service/Implementations/VendorCapacityService";
 import { NewCapacityDataService } from "./Service/Implementations/NewCapacityDataService";
 import { CategoryTimelineAveragesService } from "./Service/Implementations/CategoryTimelineAveragesService";
-import { TimelineOperationsService } from "./Service/Implementations/TimelineOperationsService";
-import { VendorTimelineTemplateService } from "./Service/Implementations/VendorTimelineTemplateService";
 import { CommunicationsService } from "./Service/Implementations/CommunicationsService";
 import { ClientOperationsService } from "./Service/Implementations/ClientOperationsService";
-import { ComplianceStylesOperations } from "./Service/Implementations/ComplianceStylesOperations";
 
-// Existing service instances
+// Service instances - Coworker's services
 export const storage = new DbStorage();
 export const logService = new LogService();
 export const userService = new UserService();
 export const staffService = new StaffService();
 export const vendorService = new VendorService();
 export const vendorContactService = new VendorContactService();
+export const purchaseOrderService = new PurchaseOrderService();
+export const pOHeaderService = new POHeaderService();
+export const sKUService = new SKUService();
+export const clientOperationService = new ClientOperationService();
+export const staffGoalsService = new StaffGoalsService();
+export const inspectionService = new InspectionService();
+export const complianceStylesOperations = new ComplianceStylesOperations();
+export const inspectionStatusReport = new InspectionStatusReport();
+export const qualityTestService = new QualityTestService();
+export const qualityAndComplianceDashboardService = new QualityAndComplianceDashboardService();
+export const timelineOperationsService = new TimelineOperationsService();
+export const oTDBreakdownService = new OTDBreakdownService();
+export const pOTaskService = new POTaskService();
+export const pOTimelineService = new POTimelineService();
+export const projectionMatchingAndValidationService = new ProjectionMatchingAndValidationService();
+export const qualityDashboardService = new QualityDashboardService();
+export const shipmentWithPODataService = new ShipmentWithPODataService();
+export const sKUColorPanelJunctionService = new SKUColorPanelJunctionService();
+export const vendorTimelineTemplateService = new VendorTimelineTemplateService();
 
-// New service instances - Sudarshan's services (15 services)
+// Service instances - Sudarshan's unique services (9 services)
 export const importHistoryService = new ImportHistoryService();
 export const colorPanelService = new ColorPanelService();
-export const poHeaderService = new POHeaderService();
 export const colorPanelHistoryService = new ColorPanelHistoryService();
-export const skuColorPanelJunctionService = new SKUColorPanelJunctionService();
-export const poTasksService = new POTasksService();
-export const poTimelineService = new POTimelineService();
 export const vendorCapacityService = new VendorCapacityService();
 export const newCapacityDataService = new NewCapacityDataService();
 export const categoryTimelineAveragesService = new CategoryTimelineAveragesService();
-export const timelineOperationsService = new TimelineOperationsService();
-export const vendorTimelineTemplateService = new VendorTimelineTemplateService();
 export const communicationsService = new CommunicationsService();
 export const clientOperationsService = new ClientOperationsService();
-export const complianceStylesOperations = new ComplianceStylesOperations();

@@ -1,6 +1,6 @@
 import { VendorTimelineTemplate, VendorTemplateMilestone, InsertVendorTimelineTemplate, InsertVendorTemplateMilestone } from "@shared/schema";
 
-export interface IPOTimelineService {
+export interface IVendorTimelineTemplateService {
     // Vendor Timeline Template operations
     getVendorTimelineTemplates(vendorId: number): Promise<VendorTimelineTemplate[]>;
     getVendorTimelineTemplateById(id: number): Promise<{
