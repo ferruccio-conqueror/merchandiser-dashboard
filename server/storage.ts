@@ -93,15 +93,51 @@ export interface ComplianceFilters {
   endDate?: Date;
 }
 
+// Existing service imports
 import { LogService } from "./Service/Implementations/LogService";
 import { UserService } from "./Service/Implementations/UserService";
 import { StaffService } from "./Service/Implementations/StaffService";
 import { VendorService } from "./Service/Implementations/VendorService";
 import { VendorContactService } from "./Service/Implementations/VendorContactService";
 
+// New service imports - Sudarshan's services (15 services)
+import { ImportHistoryService } from "./Service/Implementations/ImportHistoryService";
+import { ColorPanelService } from "./Service/Implementations/ColorPanelService";
+import { POHeaderService } from "./Service/Implementations/POHeaderService";
+import { ColorPanelHistoryService } from "./Service/Implementations/ColorPanelHistoryService";
+import { SKUColorPanelJunctionService } from "./Service/Implementations/SKUColorPanelJunctionService";
+import { POTasksService } from "./Service/Implementations/POTasksService";
+import { POTimelineService } from "./Service/Implementations/POTimelineService";
+import { VendorCapacityService } from "./Service/Implementations/VendorCapacityService";
+import { NewCapacityDataService } from "./Service/Implementations/NewCapacityDataService";
+import { CategoryTimelineAveragesService } from "./Service/Implementations/CategoryTimelineAveragesService";
+import { TimelineOperationsService } from "./Service/Implementations/TimelineOperationsService";
+import { VendorTimelineTemplateService } from "./Service/Implementations/VendorTimelineTemplateService";
+import { CommunicationsService } from "./Service/Implementations/CommunicationsService";
+import { ClientOperationsService } from "./Service/Implementations/ClientOperationsService";
+import { ComplianceStylesOperations } from "./Service/Implementations/ComplianceStylesOperations";
+
+// Existing service instances
 export const storage = new DbStorage();
 export const logService = new LogService();
 export const userService = new UserService();
 export const staffService = new StaffService();
 export const vendorService = new VendorService();
 export const vendorContactService = new VendorContactService();
+
+// New service instances - Sudarshan's services (15 services)
+export const importHistoryService = new ImportHistoryService();
+export const colorPanelService = new ColorPanelService();
+export const poHeaderService = new POHeaderService();
+export const colorPanelHistoryService = new ColorPanelHistoryService();
+export const skuColorPanelJunctionService = new SKUColorPanelJunctionService();
+export const poTasksService = new POTasksService();
+export const poTimelineService = new POTimelineService();
+export const vendorCapacityService = new VendorCapacityService();
+export const newCapacityDataService = new NewCapacityDataService();
+export const categoryTimelineAveragesService = new CategoryTimelineAveragesService();
+export const timelineOperationsService = new TimelineOperationsService();
+export const vendorTimelineTemplateService = new VendorTimelineTemplateService();
+export const communicationsService = new CommunicationsService();
+export const clientOperationsService = new ClientOperationsService();
+export const complianceStylesOperations = new ComplianceStylesOperations();
