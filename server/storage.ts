@@ -109,6 +109,14 @@ import { InspectionStatusReport } from "./Service/Implementations/InspectionStat
 import { QualityTestService } from "./Service/Implementations/QualityTestService";
 import { QualityAndComplianceDashboardService } from "./Service/Implementations/QualityAndComplianceDashboardService";
 import { TimelineOperationsService } from "./Service/Implementations/TimelineOperationsService";
+import { OTDBreakdownService } from "./Service/Implementations/OTDBreakdownService";
+import { POTaskService } from "./Service/Implementations/POTaskService";
+import { POTimelineService } from "./Service/Implementations/POTimelineService";
+import { ProjectionMatchingAndValidationService } from "./Service/Implementations/ProjectionMatchingAndValidationService";
+import { QualityDashboardService } from "./Service/Implementations/QualityDashboardService";
+import { ShipmentWithPODataService } from "./Service/Implementations/ShipmentWithPODataService";
+import { SKUColorPanelJunctionService } from "./Service/Implementations/SKUColorPanelJunctionService";
+import { VendorTimelineTemplateService } from "./Service/Implementations/VendorTimelineTemplateService";
 
 
 
@@ -129,4 +137,15 @@ export const inspectionStatusReport = new InspectionStatusReport();
 export const qualityTestService = new QualityTestService();
 export const qualityAndComplianceDashboardService = new QualityAndComplianceDashboardService();
 export const timelineOperationsService = new TimelineOperationsService();
+export const oTDBreakdownService = new OTDBreakdownService();
+export const pOTaskService = new POTaskService();
+export const pOTimelineService = new POTimelineService();
+export const projectionMatchingAndValidationService = new ProjectionMatchingAndValidationService();
+export const qualityDashboardService = new QualityDashboardService();
+export const shipmentWithPODataService = new ShipmentWithPODataService();
+export const sKUColorPanelJunctionService = new SKUColorPanelJunctionService();
+export const vendorTimelineTemplateService = new VendorTimelineTemplateService();
+
+
+
 
